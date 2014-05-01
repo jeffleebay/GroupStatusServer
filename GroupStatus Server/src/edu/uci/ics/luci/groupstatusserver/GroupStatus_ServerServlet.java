@@ -10,4 +10,8 @@ public class GroupStatus_ServerServlet extends HttpServlet {
 		resp.setContentType("text/plain");
 		resp.getWriter().println("Hello, world");
 	}
+	public void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException {
+		doGet(req, resp);
+	}
 }
