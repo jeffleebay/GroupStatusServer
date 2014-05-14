@@ -3,7 +3,7 @@
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
-<%@ page import="edu.uci.ics.luci.groupstatusserver.userdatabase.Dao" %>
+<%@ page import="edu.uci.ics.luci.groupstatusserver.userdatabase.UserDAO" %>
 <%@ page import="edu.uci.ics.luci.groupstatusserver.userdatabase.UserObject" %>
 
 <!DOCTYPE html>
@@ -19,7 +19,7 @@
   </head>
   <body>
 <%
-Dao dao = Dao.INSTANCE;
+UserDAO dao = UserDAO.INSTANCE;
 
 UserService userService = UserServiceFactory.getUserService();
 User user = userService.getCurrentUser();

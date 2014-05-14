@@ -1,4 +1,4 @@
-package edu.uci.ics.luci.groupstatusserver.userdatabase;
+package edu.uci.ics.luci.groupstatusserver.statusdatabase;
 
 import java.io.IOException;
 
@@ -12,23 +12,22 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-import edu.uci.ics.luci.groupstatusserver.userdatabase.UserDAO;
+import edu.uci.ics.luci.groupstatusserver.statusdatabase.StatusDAO;
 
 @SuppressWarnings("serial")
-public class ServletCreateUser extends HttpServlet {
+public class ServletCreateStatus extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		System.out.println("Creating new user ");
-		User user = (User) req.getAttribute("user");
-		if (user == null) {
-			UserService userService = UserServiceFactory.getUserService();
-			user = userService.getCurrentUser();
-		}
-		String userID = checkNull(req.getParameter("userID"));
-		String userPW = checkNull(req.getParameter("userPW"));
-		String group = checkNull(req.getParameter("group"));
-		String admin = user.getUserId();
+		System.out.println("Creating new status ");
 
-		UserDAO.INSTANCE.add(userID, userPW, group, admin);
+		String userID = checkNull(req.getParameter("userID"));
+		String group = checkNull(req.getParameter("group"));
+		String timestamp = checkNull(req.getParameter("timestamp"));
+		String status = checkNull(req.getParameter("status"));
+		String groupStatus = checkNull(req.getParameter("groupStatus"));
+		String wifiList = checkNull(req.getParameter("wifiList"));
+		String noiseLevel = checkNull(req.getParameter("noiseLevel"));
+
+		StatusDAO.INSTANCE.add(userID, group, timestamp, status, groupStatus, wifiList, noiseLevel);
 
 		resp.sendRedirect("/ParticipantManagementApplication.jsp");
 	}

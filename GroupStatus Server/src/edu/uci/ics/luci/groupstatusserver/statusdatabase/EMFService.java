@@ -1,4 +1,4 @@
-package edu.uci.ics.luci.groupstatusserver.Todo;
+package edu.uci.ics.luci.groupstatusserver.statusdatabase;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 

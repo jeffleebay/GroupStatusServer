@@ -46,7 +46,7 @@ public class UserObject {
 		return group;
 	}
 
-	public void setGroupl(String group) {
+	public void setGroup(String group) {
 		this.group = group;
 	}
 
