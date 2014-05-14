@@ -8,6 +8,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
+import edu.uci.ics.luci.groupstatusserver.userdatabase.*;
+
 @SuppressWarnings("serial")
 public class GroupStatus_ServerServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -18,30 +20,22 @@ public class GroupStatus_ServerServlet extends HttpServlet {
 		
 		System.out.println("line 19 @ GroupStatus_ServerServlet");
 
-		String function = req.getParameter("function");
+		String function = checkNull(req.getParameter("function"));
 		if(function == null) function = "null";
 
 		switch (function) {
 		case "login":
-			String userID = req.getParameter("userID");
-			String userPW = req.getParameter("userPW");
-			if (userID.equals("user001") && userPW.equals("1234")){
-				out.println("success");
-				
-				ServletContext context = this.getServletContext();
-				RequestDispatcher dispatcher = context.getRequestDispatcher("/new");
-				try {
-//					HttpServletRequest request;
-//					HttpServletResponse response;
-					dispatcher.forward(req, resp);
-				} catch (ServletException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			String userID = checkNull(req.getParameter("userID"));
+			String userPW = checkNull(req.getParameter("userPW"));
+			String group = Dao.INSTANCE.checkUser(userID, userPW);
+			if (group.equals("Login/password combination not found")){
+				out.println("log in failure");
+			}else{
+				out.println("successfully logged in");
 			}
 						break;
 		case "upload":
-			String status = req.getParameter("status");
+			String status = checkNull(req.getParameter("status"));
 			if (status.equals("Coding in Vista del Campo"))
 				out.println("success");
 			break;
@@ -54,5 +48,12 @@ public class GroupStatus_ServerServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		doGet(req, resp);
+	}
+	
+	private String checkNull(String s) {
+		if (s == null) {
+			return "";
+		}
+		return s;
 	}
 }

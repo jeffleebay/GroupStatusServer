@@ -3,8 +3,8 @@
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
-<%@ page import="edu.uci.ics.luci.groupstatusserver.Todo.Todo" %>
-<%@ page import="edu.uci.ics.luci.groupstatusserver.Todo.Dao" %>
+<%@ page import="edu.uci.ics.luci.groupstatusserver.userdatabase.Dao" %>
+<%@ page import="edu.uci.ics.luci.groupstatusserver.userdatabase.UserObject" %>
 
 <!DOCTYPE html>
 
@@ -13,7 +13,7 @@
 
 <html>
   <head>
-    <title>Todos (Group Status)</title>
+    <title>[Group Status] Participant Database</title>
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
       <meta charset="utf-8"> 
   </head>
@@ -26,12 +26,17 @@ User user = userService.getCurrentUser();
 
 String url = userService.createLoginURL(request.getRequestURI());
 String urlLinktext = "Login";
-List<Todo> todos = new ArrayList<Todo>();
+List<UserObject> userList = new ArrayList<UserObject>();
             
 if (user != null){
-    url = userService.createLogoutURL(request.getRequestURI());
-    urlLinktext = "Logout";
-    todos = dao.getTodos(user.getUserId());
+	if(userService.isUserAdmin()){		
+	    url = userService.createLogoutURL(request.getRequestURI());
+	    urlLinktext = "Logout";
+	    userList = dao.getUserList(user.getUserId());
+	}else{
+		String redirectURL = "http://www.yahoo.com"; 
+	    response.sendRedirect(redirectURL);
+	}
 }
     
 %>
@@ -39,35 +44,36 @@ if (user != null){
     <div class="line"></div>
     <div class="topLine">
       <div style="float: left;"><img src="images/icon.png" /></div>
-      <div style="float: left;" class="headline">Todos</div>
+      <div style="float: left;" class="headline">Participants</div>
       <div style="float: right;"><a href="<%=url%>"><%=urlLinktext%></a> <%=(user==null? "" : user.getNickname())%></div>
     </div>
   </div>
 
-<div style="clear: both;"/>  
-You have a total number of <%= todos.size() %>  Todos.
+<div style="clear: both;">  
+You have a total number of <%= userList.size() %>  participants.
+</div>
 
 <table>
   <tr>
-      <th>Short description </th>
-      <th>Long Description</th>
-      <th>URL</th>
-      <th>Done</th>
+      <th>User ID </th>
+      <th>User PW</th>
+      <th>Group</th>
+      <th>Remove</th>
     </tr>
 
-<% for (Todo todo : todos) {%>
+<% for (UserObject userobject : userList) {%>
 <tr> 
 <td>
-<%=todo.getShortDescription()%>
+<%=userobject.getUserID()%>
 </td>
 <td>
-<%=todo.getLongDescription()%>
+<%=userobject.getUserPW()%>
 </td>
 <td>
-<%=todo.getUrl()%>
+<%=userobject.getGroup()%>
 </td>
 <td>
-<a class="done" href="/done?id=<%=todo.getId()%>" >Done</a>
+<a class="done" href="/done?id=<%=userobject.getId()%>" >Remove</a>
 </td>
 </tr> 
 <%}
@@ -79,24 +85,25 @@ You have a total number of <%= todos.size() %>  Todos.
 
 <div class="main">
 
-<div class="headline">New todo</div>
+<div class="headline">New participant</div>
 
 <% if (user != null){ %> 
-
+<!-- userID, userPW, group -->
 <form action="/new" method="post" accept-charset="utf-8">
   <table>
     <tr>
-      <td><label for="summary">Summary</label></td>
-      <td><input type="text" name="summary" id="summary" size="65"/></td>
+      <td><label for="userID">User ID</label></td>
+      <td><input type="text" name="userID" id="userID" size="65"/></td>
     </tr>
     <tr>
-      <td valign="description"><label for="description">Description</label></td>
-      <td><textarea rows="4" cols="50" name="description" id="description"></textarea></td>
+      <td><label for="userPW">User PW</label></td>
+      <td><input type="text" name="userPW" id="userPW" size="65"/></td>
     </tr>
-  <tr>
-    <td valign="top"><label for="url">URL</label></td>
-    <td><input type="url" name="url" id="url" size="65" /></td>
-  </tr>
+    <tr>
+      <td><label for="group">Group</label></td>
+      <td><input type="text" name="group" id="group" size="65"/></td>
+    </tr>
+    
   <tr>
       <td colspan="2" align="right"><input type="submit" value="Create"/></td>
     </tr>

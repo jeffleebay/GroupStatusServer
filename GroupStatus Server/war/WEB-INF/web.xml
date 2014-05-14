@@ -16,11 +16,11 @@
 	
 	<servlet>
 		<servlet-name>CreateNewTodo</servlet-name>
-		<servlet-class>edu.uci.ics.luci.groupstatusserver.Todo.ServletCreateTodo</servlet-class>
+		<servlet-class>edu.uci.ics.luci.groupstatusserver.userdatabase.ServletCreateUser</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>RemoveTodo</servlet-name>
-		<servlet-class>edu.uci.ics.luci.groupstatusserver.Todo.ServletRemoveTodo</servlet-class>
+		<servlet-class>edu.uci.ics.luci.groupstatusserver.userdatabase.ServletRemoveUser</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>RemoveTodo</servlet-name>
@@ -33,7 +33,7 @@
 	
 	
 	<welcome-file-list>
-		<welcome-file>TodoApplication.jsp</welcome-file>
+		<welcome-file>ParticipantManagementApplication.jsp</welcome-file>
 	</welcome-file-list>
 	<servlet>
 		<servlet-name>SystemServiceServlet</servlet-name>
