@@ -8,18 +8,10 @@ import javax.persistence.Query;
 public enum UserDAO {
 	INSTANCE;
 
-	// public List<UserObject> listTodos() {
-	// EntityManager em = EMFService.get().createEntityManager();
-	// // read the existing entries
-	// Query q = em.createQuery("select m from Todo m");
-	// List<UserObject> todos = q.getResultList();
-	// return todos;
-	// }
-
-	public void add(String userID, String userPW, String group, String admin) {
+	public void add(String userID, String userPW, String group, String type, String startingDateForExp, String timeIntervalForExp, String other, String admin) {
 		synchronized (this) {
 			EntityManager em = EMFService.get().createEntityManager();
-			UserObject user = new UserObject(userID, userPW, group, admin);
+			UserObject user = new UserObject(userID, userPW, group, type, startingDateForExp, timeIntervalForExp, other, admin);
 			em.persist(user);
 			em.close();
 		}
@@ -31,7 +23,7 @@ public enum UserDAO {
 		q.setParameter("userID", userID);
 		List<UserObject> users = q.getResultList();
 		if(users.size()>=1 && users.get(0).getUserPW().equals(userPW)) //size>=1 rather than size==1 in case there are duplicates
-			return users.get(0).getGroup();
+			return ("group=" + users.get(0).getGroup()+";type="+users.get(0).getType()+";startingDate="+users.get(0).getStartingDateForExp()+";timeInterval="+users.get(0).geTtimeIntervalForExp());
 		else
 			return "Login/password combination not found";
 	}

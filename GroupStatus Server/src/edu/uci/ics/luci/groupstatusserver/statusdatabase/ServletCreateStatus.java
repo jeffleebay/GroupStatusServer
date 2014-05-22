@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.mortbay.log.Log;
 
+import com.google.appengine.api.datastore.Text;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -24,10 +25,12 @@ public class ServletCreateStatus extends HttpServlet {
 		String timestamp = checkNull(req.getParameter("timestamp"));
 		String status = checkNull(req.getParameter("status"));
 		String groupStatus = checkNull(req.getParameter("groupStatus"));
-		String wifiList = checkNull(req.getParameter("wifiList"));
+		Text wifiList = new Text(checkNull(req.getParameter("wifiList"))); //String must be 500 characters or less.
 		String noiseLevel = checkNull(req.getParameter("noiseLevel"));
-
-		StatusDAO.INSTANCE.add(userID, group, timestamp, status, groupStatus, wifiList, noiseLevel);
+		String location = checkNull(req.getParameter("location"));
+		String address = checkNull(req.getParameter("address"));
+		
+		StatusDAO.INSTANCE.add(userID, group, timestamp, status, groupStatus, wifiList, noiseLevel, location, address);
 
 		resp.sendRedirect("/ParticipantManagementApplication.jsp");
 	}
