@@ -100,11 +100,12 @@
 	
 	<div class="main" align="center">
 
-		<div class="headline">Create a new participant</div>
-<br>
 		<%
 			if (user != null) {
 		%>
+
+		<div class="headline">Create a new participant</div>
+<br>
 		<!-- userID, userPW, group -->
 		<form action="/new" method="post" accept-charset="utf-8">
 			<table>
