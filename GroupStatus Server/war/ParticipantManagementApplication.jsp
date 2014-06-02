@@ -149,7 +149,17 @@
 				</tr>
 			</table>
 		</form>
-
+		<br>
+		<form action="/fooUser"  method="post" accept-charset="utf-8">
+    		<input type="submit" value="Create foo users">
+		</form>
+		
+		<br>
+		<form action="/fooStatus"  method="post" accept-charset="utf-8">
+    		<input type="submit" value="Create foo statuses">
+		</form>
+		<br>
+		
 		<%
 			} else {
 		%>

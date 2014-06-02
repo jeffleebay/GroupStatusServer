@@ -16,10 +16,10 @@ public enum UserDAO {
 			em.close();
 		}
 	}
-
+	
 	public String checkUser(String userID, String userPW) {
 		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("select t from UserObject t where t.userID = :userID");
+		Query q = em.createQuery("SELECT t FROM UserObject t WHERE t.userID = :userID");
 		q.setParameter("userID", userID);
 		List<UserObject> users = q.getResultList();
 		if(users.size()>=1 && users.get(0).getUserPW().equals(userPW)) //size>=1 rather than size==1 in case there are duplicates
@@ -30,9 +30,12 @@ public enum UserDAO {
 	
 	public List<UserObject> getUserList(String adminID) {
 		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("select t from UserObject t where t.admin = :adminID");
+		Query q = em.createQuery("select t from UserObject t where t.admin = :adminID order by t.group, t.userID");
 		q.setParameter("adminID", adminID);
+		
+		@SuppressWarnings("unchecked")
 		List<UserObject> users = q.getResultList();
+		
 		return users;
 	}
 

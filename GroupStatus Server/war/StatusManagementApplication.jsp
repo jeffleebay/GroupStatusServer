@@ -4,9 +4,9 @@
 <%@ page import="com.google.appengine.api.users.UserService"%>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
 <%@ page
-	import="edu.uci.ics.luci.groupstatusserver.userdatabase.UserDAO"%>
+	import="edu.uci.ics.luci.groupstatusserver.statusdatabase.StatusDAO"%>
 <%@ page
-	import="edu.uci.ics.luci.groupstatusserver.userdatabase.UserObject"%>
+	import="edu.uci.ics.luci.groupstatusserver.statusdatabase.StatusObject"%>
 
 <!DOCTYPE html>
 
@@ -22,20 +22,20 @@
 <body>
 
 	<%
-		UserDAO dao = UserDAO.INSTANCE;
+		StatusDAO dao = StatusDAO.INSTANCE;
 
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 
 		String url = userService.createLoginURL(request.getRequestURI());
 		String urlLinktext = "Login";
-		List<UserObject> userList = new ArrayList<UserObject>();
+		List<StatusObject> statusList = new ArrayList<StatusObject>();
 
 		if (user != null) {
 			if (userService.isUserAdmin()) {
 				url = userService.createLogoutURL(request.getRequestURI());
 				urlLinktext = "Logout";
-				userList = dao.getUserList(user.getUserId());
+				statusList = dao.getSortedStatusList(user.getUserId());
 			} else {
 				String redirectURL = "http://www.yahoo.com";
 				response.sendRedirect(redirectURL);
@@ -59,29 +59,22 @@
 
 	<table align="center">
 		<tr>
-			<th>User ID</th>
-			<th>User PW</th>
 			<th>Group</th>
-			<th>Type</th>
-			<th>Starting Date</th>
-			<th>Time Interval</th>
-			<th>Other</th>
-			<th>Remove</th>
+			<th>User ID</th>
+			<th>Time stamp</th>
+			<th>Status</th>
+			<th>Group Status</th>
 		</tr>
 
 		<%
-			for (UserObject userobject : userList) {
+			for (StatusObject statusobject : statusList) {
 		%>
 		<tr>
-			<td><%=userobject.getUserID()%></td>
-			<td><%=userobject.getUserPW()%></td>
-			<td><%=userobject.getGroup()%></td>
-			<td><%=userobject.getType()%></td>
-			<td><%=userobject.getStartingDateForExp()%></td>
-			<td><%=userobject.geTtimeIntervalForExp()%></td>
-			<td><%=userobject.getOther()%></td>
-			<td><a class="done" href="/done?id=<%=userobject.getId()%>">Remove</a>
-			</td>
+			<td><%=statusobject.getGroup()%></td>
+			<td><%=statusobject.getUserID()%></td>
+			<td><%=statusobject.getTimestamp()%></td>
+			<td><%=statusobject.getStatus()%></td>
+			<td><%=statusobject.getGroupStatus()%></td>
 		</tr>
 		<%
 			}
@@ -91,8 +84,8 @@
 	<br>
 	<div style="clear: both;">
 		You have a total number of
-		<%=userList.size()%>
-		participants.
+		<%=statusList.size()%>
+		statuses.
 	</div>
 
 	<hr />
@@ -104,51 +97,11 @@
 			if (user != null) {
 		%>
 
-		<div class="headline">Create a new participant</div>
-<br>
-		<!-- userID, userPW, group -->
-		<form action="/new" method="post" accept-charset="utf-8">
-			<table>
-				<tr>
-					<td><label for="userID">User ID (4 digits)</label></td>
-					<td><input type="text" name="userID" id="userID" size="65" /></td>
-				</tr>
-				<tr>
-					<td><label for="userPW">User PW (4 digits)</label></td>
-					<td><input type="text" name="userPW" id="userPW" size="65" /></td>
-				</tr>
-				<tr>
-					<td><label for="group">Belonged group</label></td>
-					<td><input type="text" name="group" id="group" size="65" /></td>
-				</tr>
-				<tr>
-					<td><label for="Type">Type (debugging, testing,
-							experiment)</label></td>
-					<td><input type="text" name="type" id="type" size="65" /></td>
-				</tr>
-				<tr>
-					<td><label for="startingDateForExp">[Experiment]
-							Starting Date (MMDD)</label></td>
-					<td><input type="text" name="startingDateForExp"
-						id="startingDateForExp" size="65" /></td>
-				</tr>
-				<tr>
-					<td><label for="timeIntervalForExp">[Experiment] Time
-							Interval (Days)</label></td>
-					<td><input type="text" name="timeIntervalForExp"
-						id="timeIntervalForExp" size="65" /></td>
-				</tr>
-				<tr>
-					<td><label for="other">Other</label></td>
-					<td><input type="text" name="other" id="other" size="65" /></td>
-				</tr>
-
-				<tr>
-					<td colspan="2" align="center"><input type="submit"
-						value="Create" /></td>
-				</tr>
-			</table>
+		<br>
+		<form action="/fooStatus"  method="post" accept-charset="utf-8">
+    		<input type="submit" value="Create foo statuses">
 		</form>
+		<br>
 
 		<%
 			} else {
