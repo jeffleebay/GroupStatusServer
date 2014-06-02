@@ -27,7 +27,7 @@ public enum StatusDAO {
 		
 		EntityManager em = EMFService.get().createEntityManager();
 		Query q = em.createQuery("SELECT t FROM StatusObject t ORDER BY t.group, t.timestamp ASC");
-		
+		 
 		@SuppressWarnings("unchecked")
 		List<StatusObject> statuses = q.getResultList();
 		
