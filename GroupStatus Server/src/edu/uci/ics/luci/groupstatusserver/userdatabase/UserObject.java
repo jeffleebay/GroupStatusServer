@@ -12,17 +12,17 @@ public class UserObject {
 	private Long id;
 	private String userID;
 	private String userPW;
-	private String group; 
+	private String mGroup; 
 	private String type; //debugging, testing, experiment 
 	private String startingDateForExp;  //experiment only
 	private String timeIntervalForExp;  //experiment only
 	private String other;
 	private String admin;
 
-	public UserObject(String userID, String userPW, String group, String type, String startingDateForExp, String timeIntervalForExp, String other, String admin) {
+	public UserObject(String userID, String userPW, String mGroup, String type, String startingDateForExp, String timeIntervalForExp, String other, String admin) {
 		this.userID = userID;
 		this.userPW = userPW;
-		this.group = group;
+		this.mGroup = mGroup;
 		this.type = type;
 		this.startingDateForExp = startingDateForExp;
 		this.timeIntervalForExp = timeIntervalForExp;
@@ -50,12 +50,12 @@ public class UserObject {
 		this.userPW = userPW;
 	}
 
-	public String getGroup() {
-		return group;
+	public String getmGroup() {
+		return mGroup;
 	}
 	
-	public void setGroup(String group) {
-		this.group = group;
+	public void setmGroup(String mGroup) {
+		this.mGroup = mGroup;
 	}
 
 	public String getType() {

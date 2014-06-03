@@ -23,14 +23,14 @@ public enum UserDAO {
 		q.setParameter("userID", userID);
 		List<UserObject> users = q.getResultList();
 		if(users.size()>=1 && users.get(0).getUserPW().equals(userPW)) //size>=1 rather than size==1 in case there are duplicates
-			return ("group=" + users.get(0).getGroup()+";type="+users.get(0).getType()+";startingDate="+users.get(0).getStartingDateForExp()+";timeInterval="+users.get(0).geTtimeIntervalForExp());
+			return ("group=" + users.get(0).getmGroup()+";type="+users.get(0).getType()+";startingDate="+users.get(0).getStartingDateForExp()+";timeInterval="+users.get(0).geTtimeIntervalForExp());
 		else
 			return "Login/password combination not found";
 	}
 	
 	public List<UserObject> getUserList(String adminID) {
 		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("select t from UserObject t where t.admin = :adminID order by t.group, t.userID");
+		Query q = em.createQuery("select t from UserObject t where t.admin = :adminID order by t.mGroup, t.userID");
 		q.setParameter("adminID", adminID);
 		
 		@SuppressWarnings("unchecked")

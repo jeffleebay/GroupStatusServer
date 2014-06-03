@@ -39,7 +39,7 @@ public class ServletCreateFooUsers extends HttpServlet {
 				userID=Integer.toString(9000 + i*10 + j);
 				userPW=Integer.toString(9900 + i*10 + j);
 				UserDAO.INSTANCE.add(userID, userPW, group, type, startingDateForExp, timeIntervalForExp, other, admin);
-				System.out.println(userID + "," + userPW + "created");
+//				System.out.println(userID + "," + userPW + " created");
 			}
 		}
 

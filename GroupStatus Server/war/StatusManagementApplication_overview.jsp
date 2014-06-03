@@ -169,7 +169,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 				<ul class="nav navbar-nav navbar-left">
 					<li><a href="ParticipantManagementApplication.jsp">Participant
 							Management</a></li>
-					<li><a href="StatusManagementApplication.jsp">Status
+					<li><a href="StatusManagementApplication_overview.jsp">Status
 							Management</a></li>
 				</ul>
 				<form class="nav navbar-form navbar-right" role="form">
@@ -193,7 +193,12 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 	<!-- content -->
 
 	<div class="container-fluid">
-		<h1 class="page-header">Participants</h1>
+		<h1 class="page-header">Status Management Console</h1>
+		<ul class="nav nav-tabs">
+		  <li class="active"><a href="StatusManagementApplication_overview.jsp">Overview</a></li>
+		  <li><a href="StatusManagementApplication_groupmode.jsp">Group Mode</a></li>
+		  <li><a href="StatusManagementApplication_timeline.jsp">Timeline</a></li>
+		</ul>
 
 		<div class="table-responsive">
 			<table class="table table-striped">
@@ -211,11 +216,11 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 						for (StatusObject statusobject : statusList) {
 					%>
 					<tr>
-						<td><%=statusobject.getGroup()%></td>
+						<td><%=statusobject.getmGroup()%></td>
 						<td><%=statusobject.getUserID()%></td>
 						<td><%=statusobject.getTimestamp()%></td>
 						<td><%=statusobject.getStatus()%></td>
-						<td><%=statusobject.getGroupStatus()%></td>
+						<td><%=statusobject.getmGroupStatus()%></td>
 					</tr>
 					<%
 						}

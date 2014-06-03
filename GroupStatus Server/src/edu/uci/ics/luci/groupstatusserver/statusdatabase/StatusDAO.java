@@ -26,12 +26,33 @@ public enum StatusDAO {
 	public List<StatusObject> getSortedStatusList(String adminID) {
 		
 		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("SELECT t FROM StatusObject t ORDER BY t.group, t.timestamp, t.userID ASC");
+		Query q = em.createQuery("SELECT t FROM StatusObject t ORDER BY t.mGroup, t.timestamp, t.userID ASC");
 		 
 		@SuppressWarnings("unchecked")
 		List<StatusObject> statuses = q.getResultList();
 		
-//		Query query = new Query("")
+		return statuses;
+	}
+	
+	public List<String> getDistinctGroupList(String adminID) {
+		
+		EntityManager em = EMFService.get().createEntityManager();
+		Query q = em.createQuery("SELECT DISTINCT t.mGroup FROM StatusObject t ORDER BY t.mGroup ASC");
+		 
+		@SuppressWarnings("unchecked")
+		List<String> groupNames = q.getResultList();
+		
+		return groupNames;
+	}
+	
+	public List<StatusObject> getStatusListOfTheGroup(String groupName, String adminID) {
+		
+		EntityManager em = EMFService.get().createEntityManager();
+		Query q = em.createQuery("SELECT t FROM StatusObject t WHERE t.mGroup = :groupName ORDER BY t.timestamp, t.userID ASC");
+		q.setParameter("groupName", groupName);
+		
+		@SuppressWarnings("unchecked")
+		List<StatusObject> statuses = q.getResultList();
 		
 		return statuses;
 	}

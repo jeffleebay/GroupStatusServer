@@ -13,22 +13,22 @@ public class StatusObject {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String userID;
-	private String group;
+	private String mGroup;
 	private String timestamp;
 	private String status;
-	private String groupStatus;
+	private String mGroupStatus;
 	private Text wifiList;
 	private String noiseLevel;
 	private String location;
 	private String address;
 
-	public StatusObject(String userID, String group, String timestamp, String status, 
-			String groupStatus, Text wifiList, String noiseLevel, String location, String address) {
+	public StatusObject(String userID, String mGroup, String timestamp, String status, 
+			String mGroupStatus, Text wifiList, String noiseLevel, String location, String address) {
 		this.userID = userID;
-		this.group = group;
+		this.mGroup = mGroup;
 		this.timestamp = timestamp;
 		this.status = status;
-		this.groupStatus = groupStatus;
+		this.mGroupStatus = mGroupStatus;
 		this.wifiList = wifiList;
 		this.noiseLevel = noiseLevel;
 		this.location = location;
@@ -47,12 +47,12 @@ public class StatusObject {
 		this.userID = userID;
 	}
 
-	public String getGroup() {
-		return group;
+	public String getmGroup() {
+		return mGroup;
 	}
 
-	public void setGroup(String group) {
-		this.group = group;
+	public void setmGroup(String mGroup) {
+		this.mGroup = mGroup;
 	}
 
 	public String getTimestamp() {
@@ -71,12 +71,12 @@ public class StatusObject {
 		this.status = status;
 	}
 	
-	public String getGroupStatus() {
-		return groupStatus;
+	public String getmGroupStatus() {
+		return mGroupStatus;
 	}
 	
-	public void setGroupStatus(String groupStatus) {
-		this.groupStatus = groupStatus;
+	public void setmGroupStatus(String mGroupStatus) {
+		this.mGroupStatus = mGroupStatus;
 	}	
 	
 	public Text getWifiList() {

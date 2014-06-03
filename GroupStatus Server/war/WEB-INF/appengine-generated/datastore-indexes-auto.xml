@@ -1,11 +1,19 @@
-<!-- Indices written at Mon, 2 Jun 2014 15:46:22 PDT -->
+<!-- Indices written at Mon, 2 Jun 2014 23:49:48 PDT -->
 
 <datastore-indexes>
 
-    <!-- Used 1 time in query history -->
+    <!-- Used 4 times in query history -->
     <datastore-index kind="StatusObject" ancestor="false" source="auto">
-        <property name="group" direction="asc"/>
+        <property name="mGroup" direction="asc"/>
         <property name="timestamp" direction="asc"/>
+        <property name="userID" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="UserObject" ancestor="false" source="auto">
+        <property name="admin" direction="asc"/>
+        <property name="mGroup" direction="asc"/>
+        <property name="userID" direction="asc"/>
     </datastore-index>
 
 </datastore-indexes>

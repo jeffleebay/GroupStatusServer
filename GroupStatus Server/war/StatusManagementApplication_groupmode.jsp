@@ -4,9 +4,9 @@
 <%@ page import="com.google.appengine.api.users.UserService"%>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
 <%@ page
-	import="edu.uci.ics.luci.groupstatusserver.userdatabase.UserDAO"%>
+	import="edu.uci.ics.luci.groupstatusserver.statusdatabase.StatusDAO"%>
 <%@ page
-	import="edu.uci.ics.luci.groupstatusserver.userdatabase.UserObject"%>
+	import="edu.uci.ics.luci.groupstatusserver.statusdatabase.StatusObject"%>
 
 <!DOCTYPE html>
 
@@ -24,7 +24,7 @@
 <link rel="shortcut icon"
 	href="http://getbootstrap.com/assets/ico/favicon.ico">
 
-<title>[Group Status] Participant Database</title>
+<title>[Group Status] Status Database</title>
 
 <!-- Bootstrap core CSS -->
 <link href="http://getbootstrap.com/dist/css/bootstrap.min.css"
@@ -131,20 +131,22 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 <body>
 
 	<%
-		UserDAO dao = UserDAO.INSTANCE;
+		StatusDAO dao = StatusDAO.INSTANCE;
 
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 
 		String url = userService.createLoginURL(request.getRequestURI());
 		String urlLinktext = "Login";
-		List<UserObject> userList = new ArrayList<UserObject>();
+		List<String> groupList = new ArrayList<String>();
+		List<StatusObject> statusList = new ArrayList<StatusObject>();
 
 		if (user != null) {
 			if (userService.isUserAdmin()) {
 				url = userService.createLogoutURL(request.getRequestURI());
 				urlLinktext = "Logout";
-				userList = dao.getUserList(user.getUserId());
+				groupList = dao.getDistinctGroupList(user.getUserId());
+				statusList = dao.getSortedStatusList(user.getUserId());
 			} else {
 				String redirectURL = "http://www.yahoo.com";
 				response.sendRedirect(redirectURL);
@@ -193,141 +195,62 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 	<!-- content -->
 
 	<div class="container-fluid">
-		<h1 class="page-header">Participant Management Console</h1>
-
-		<div class="table-responsive">
+	<h1 class="page-header">Status Management Console</h1>
+	<ul class="nav nav-tabs">
+	  <li><a href="StatusManagementApplication_overview.jsp">Overview</a></li>
+	  <li class="active"><a href="StatusManagementApplication_groupmode.jsp">Group Mode</a></li>
+	  <li><a href="StatusManagementApplication_timeline.jsp">Timeline</a></li>
+	</ul>
+	
+	<%
+		for (String groupName : groupList) {
+			List<StatusObject> statusListOfTheGroup = new ArrayList<StatusObject>();
+			statusListOfTheGroup = dao.getStatusListOfTheGroup(groupName, user.getUserId());
+	%>
+	<h3 class="page-header"><%=groupName%></h3>
+	
+	<div class="table-responsive">
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>User ID</th>
-						<th>User PW</th>
 						<th>Group</th>
-						<th>Type</th>
-						<th>Starting Date</th>
-						<th>Time Interval</th>
-						<th>Other</th>
-						<th>Remove</th>
+						<th>User ID</th>
+						<th>Time stamp</th>
+						<th>Status</th>
+						<th>Group Status</th>
 					</tr>
 				</thead>
 				<tbody>
-					<%
-						for (UserObject userobject : userList) {
-					%>
+				<%
+			for (StatusObject statusobject : statusListOfTheGroup) {
+			
+	%>
 					<tr>
-						<td><%=userobject.getUserID()%></td>
-						<td><%=userobject.getUserPW()%></td>
-						<td><%=userobject.getmGroup()%></td>
-						<td><%=userobject.getType()%></td>
-						<td><%=userobject.getStartingDateForExp()%></td>
-						<td><%=userobject.geTtimeIntervalForExp()%></td>
-						<td><%=userobject.getOther()%></td>
-						<td><a class="done" href="/done?id=<%=userobject.getId()%>">Remove</a>
-						</td>
+						<td><%=statusobject.getmGroup()%></td>
+						<td><%=statusobject.getUserID()%></td>
+						<td><%=statusobject.getTimestamp()%></td>
+						<td><%=statusobject.getStatus()%></td>
+						<td><%=statusobject.getmGroupStatus()%></td>
 					</tr>
-					<%
-						}
-					%>
+						<%
+		}
+	%>	
+					
 				</tbody>
 			</table>
 		</div>
+	
+	<%
+		}
+	%>	
+
 
 		<div style="text-align: center;">
 			<h1>
-				<small>You have a total number of <%=userList.size()%>
-					participants.
-				</small>
+				<small>You have a total number of <%=groupList.size()%> groups.</small> 
+				<br>
+				<small>You have a total number of <%=statusList.size()%> statuses.</small>
 			</h1>
-		</div>
-
-		<!-- Create a new participant -->
-
-		<h1 class="page-header">Create a new participant</h1>
-
-		<form class="form-horizontal" role="form" action="/new" method="post"
-			accept-charset="utf-8">
-
-			<div class="form-group">
-				<label for="userID" class="col-sm-2 control-label">User ID</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control" id="userID"
-						placeholder="User ID (4 digits)">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="userPW" class="col-sm-2 control-label">User PW</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control" id="userPW"
-						placeholder="User PW (4 digits)">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="group" class="col-sm-2 control-label">Group</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control" id="group"
-						placeholder="Group">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="type" class="col-sm-2 control-label">Type</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control" id="type"
-						placeholder="Type (debugging, testing, experiment)">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="startingDateForExp" class="col-sm-2 control-label">Starting
-					Date</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control" id="startingDateForExp"
-						placeholder="Starting Date (MMDD) [Experiment only]">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="timeIntervalForExp" class="col-sm-2 control-label">Time
-					Interval</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control" id="timeIntervalForExp"
-						placeholder="Time Interval (Days) [Experiment only]">
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="other" class="col-sm-2 control-label">Other</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control" id="other"
-						placeholder="Other">
-				</div>
-			</div>
-
-
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-default">Create a new
-						participant</button>
-				</div>
-			</div>
-
-		</form>
-
-
-		<h1 class="page-header">Create foo participants</h1>
-
-		<div class="btn-group">
-			<button type="button" class="btn btn-default dropdown-toggle"
-				data-toggle="dropdown">
-				Don't click me if you don't know what you are doing <span
-					class="caret"></span>
-			</button>
-			<ul class="dropdown-menu" role="menu">
-				<li><a href="/fooUser">Create foo users</a></li>
-				<li class="divider"></li>
-				<li><a href="/fooStatus">Create foo statuses</a></li>
-			</ul>
 		</div>
 
 		<!-- Footer -->
