@@ -35,7 +35,7 @@ body {
 .container-fluid {
   margin-right: auto;
   margin-left: auto;
-  max-width: 900px; /* or 950px */
+  max-width: 960px; /* or 950px */
 }
 
 /* Customize container */
