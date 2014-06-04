@@ -18,7 +18,7 @@ import edu.uci.ics.luci.groupstatusserver.userdatabase.UserDAO;
 @SuppressWarnings("serial")
 public class ServletCreateFooUsers extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		System.out.println("Creating foo users ");
+		System.out.println("Creating foo users");
 		User user = (User) req.getAttribute("user");
 		if (user == null) {
 			UserService userService = UserServiceFactory.getUserService();
@@ -28,18 +28,16 @@ public class ServletCreateFooUsers extends HttpServlet {
 		String userPW=""; 
 		String group="";
 		String type="debugging";
-		String startingDateForExp=""; 
-		String timeIntervalForExp="";
+		String startingDateOfExp="0602"; 
+		String timeIntervalOfExp="2";
 		String other="";
-		String admin = user.getUserId();
 
 		for(int i=0;i<3;i++){
 			group="Foo group 00" +(i+1);  
 			for(int j=0;j<5;j++){
 				userID=Integer.toString(9000 + i*10 + j);
 				userPW=Integer.toString(9900 + i*10 + j);
-				UserDAO.INSTANCE.add(userID, userPW, group, type, startingDateForExp, timeIntervalForExp, other, admin);
-//				System.out.println(userID + "," + userPW + " created");
+				UserDAO.INSTANCE.add(userID, userPW, group, type, startingDateOfExp, timeIntervalOfExp, other);
 			}
 		}
 
@@ -48,7 +46,7 @@ public class ServletCreateFooUsers extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		System.out.println("doGet @ ServletCreateTodo");
+		System.out.println("doGet @ CreateFooUsers");
 
 		doPost(req, resp);
 

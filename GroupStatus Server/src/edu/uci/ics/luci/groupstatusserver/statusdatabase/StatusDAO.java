@@ -1,5 +1,10 @@
 package edu.uci.ics.luci.groupstatusserver.statusdatabase;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -16,8 +21,17 @@ public enum StatusDAO {
 	public void add(String userID, String group, String timestamp, String status, 
 			String groupStatus, Text wifiList, String noiseLevel, String location, String address) {
 		synchronized (this) {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd HH:mm:ss");
+		Calendar datetime = new GregorianCalendar();
+		try {
+			datetime.setTime(sdf.parse(timestamp));
+		} catch (ParseException e) {
+			System.out.print("can't parse the string to date");
+			e.printStackTrace();
+		}
+		datetime.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
 			EntityManager em = EMFService.get().createEntityManager();
-			StatusObject update = new StatusObject(userID, group, timestamp, status, groupStatus, wifiList, noiseLevel, location, address);
+			StatusObject update = new StatusObject(userID, group, datetime.getTime(), status, groupStatus, wifiList, noiseLevel, location, address);
 			em.persist(update);
 			em.close();
 		}
@@ -26,7 +40,7 @@ public enum StatusDAO {
 	public List<StatusObject> getSortedStatusList(String adminID) {
 		
 		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("SELECT t FROM StatusObject t ORDER BY t.mGroup, t.timestamp, t.userID ASC");
+		Query q = em.createQuery("SELECT t FROM StatusObject t ORDER BY t.mGroup,  t.userID ASC");
 		 
 		@SuppressWarnings("unchecked")
 		List<StatusObject> statuses = q.getResultList();
@@ -54,6 +68,26 @@ public enum StatusDAO {
 		@SuppressWarnings("unchecked")
 		List<StatusObject> statuses = q.getResultList();
 		
+		return statuses;
+	}
+	
+	public List<StatusObject> getStatusListOfTheGroupInATimeInterval(Calendar date, int time_lowerBound, int time_upperBound, String groupName, String adminID) {
+		
+		//Be careful that month of year starts at 0...
+		Calendar lowerBoundOfTimeInterval = (Calendar) date.clone();
+		lowerBoundOfTimeInterval.set(Calendar.HOUR_OF_DAY, time_lowerBound);
+		Calendar upperBoundOfTimeInterval = (Calendar) date.clone();
+		upperBoundOfTimeInterval.set(Calendar.HOUR_OF_DAY, time_upperBound);
+		
+		EntityManager em = EMFService.get().createEntityManager();
+		Query q = em.createQuery("SELECT t FROM StatusObject t "
+							   + "WHERE t.mGroup = :groupName AND t.timestamp BETWEEN :lowerBound AND :upperBound");
+		q.setParameter("groupName", groupName);
+		q.setParameter("lowerBound", lowerBoundOfTimeInterval.getTime());
+		q.setParameter("upperBound", upperBoundOfTimeInterval.getTime());
+		
+		@SuppressWarnings("unchecked")
+		List<StatusObject> statuses = q.getResultList();
 		return statuses;
 	}
 	

@@ -1,5 +1,8 @@
 package edu.uci.ics.luci.groupstatusserver.userdatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,20 +17,18 @@ public class UserObject {
 	private String userPW;
 	private String mGroup; 
 	private String type; //debugging, testing, experiment 
-	private String startingDateForExp;  //experiment only
-	private String timeIntervalForExp;  //experiment only
+	private Date startingDateOFExp;  //experiment only
+	private String timeIntervalOFExp;  //experiment only
 	private String other;
-	private String admin;
 
-	public UserObject(String userID, String userPW, String mGroup, String type, String startingDateForExp, String timeIntervalForExp, String other, String admin) {
+	public UserObject(String userID, String userPW, String mGroup, String type, Date startingDateOFExp, String timeIntervalOFExp, String other) {
 		this.userID = userID;
 		this.userPW = userPW;
 		this.mGroup = mGroup;
 		this.type = type;
-		this.startingDateForExp = startingDateForExp;
-		this.timeIntervalForExp = timeIntervalForExp;
+		this.startingDateOFExp = startingDateOFExp;
+		this.timeIntervalOFExp = timeIntervalOFExp;
 		this.other = other;
-		this.admin = admin;
 	}
 
 	public Long getId() {
@@ -66,30 +67,39 @@ public class UserObject {
 		this.type = type;
 	}
 	
-	public String getStartingDateForExp() {
-		return startingDateForExp;
+	public Date getStartingDateOfExpAsDateObject() {
+		return startingDateOFExp;
+	}	
+	public String getStartingDateOfExpAsString() {
+//		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("MMdd");
+		String s = null;
+		if(startingDateOFExp != null) s = sdf.format(startingDateOFExp);
+		
+		return s;
+	}	
+	public String getStartingDateOfExpForDisplay() {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String s = null;
+		if(startingDateOFExp != null) s = sdf.format(startingDateOFExp);
+		
+		return s;
 	}	
 	
-	public void setStartingDateForExp(String startingDateForExp) {
-		this.startingDateForExp = startingDateForExp;
+	
+	
+	public void setStartingDateOfExp(Date startingDateOFExp) {
+		this.startingDateOFExp = startingDateOFExp;
 	}
 	
-	public String geTtimeIntervalForExp() {
-		return timeIntervalForExp;
+	public String getTimeIntervalOfExp() {
+		return timeIntervalOFExp;
 	}	
 	
-	public void setTimeIntervalForExp(String timeIntervalForExp) {
-		this.timeIntervalForExp = timeIntervalForExp;
+	public void setTimeIntervalOfExp(String timeIntervalOFExp) {
+		this.timeIntervalOFExp = timeIntervalOFExp;
 	}
 
-	public String getAdmin() {
-		return admin;
-	}
-
-	public void setAdmin(String admin) {
-		this.admin = admin;
-	}
-	
 	public String getOther() {
 		return other;
 	}

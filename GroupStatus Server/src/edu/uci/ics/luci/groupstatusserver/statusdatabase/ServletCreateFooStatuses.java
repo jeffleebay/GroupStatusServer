@@ -45,7 +45,12 @@ public class ServletCreateFooStatuses extends HttpServlet {
 				"06/02 12:27:28",
 				"06/02 15:35:44",
 				"06/02 19:20:13",
-				"06/02 21:16:12",}; 
+				"06/02 21:16:12",
+				"06/03 10:52:09",
+				"06/03 11:27:28",
+				"06/03 15:25:44",
+				"06/03 18:20:13",
+				"06/03 21:16:12"}; 
 		
 		Random rand = new Random();
 
@@ -53,7 +58,7 @@ public class ServletCreateFooStatuses extends HttpServlet {
 			group="Foo group 00" + (i+1);  
 			for(int j=0;j<5;j++){
 				userID=Integer.toString(9000 + i*10 + j);
-				for(int k=0;k<5;k++){
+				for(int k=0;k<timestampPool.length;k++){
 					timestamp=timestampPool[k];
 					status = statusPool[rand.nextInt(statusPool.length)];
 					groupStatus = groupStatusPool[rand.nextInt(groupStatusPool.length)];

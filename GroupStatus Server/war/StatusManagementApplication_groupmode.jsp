@@ -196,9 +196,9 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 
 	<div class="container-fluid">
 	<h1 class="page-header">Status Management Console</h1>
-	<ul class="nav nav-tabs">
+	<ul class="nav nav-tabs  nav-justified">
 	  <li><a href="StatusManagementApplication_overview.jsp">Overview</a></li>
-	  <li class="active"><a href="StatusManagementApplication_groupmode.jsp">Group Mode</a></li>
+	  <li class="active"><a href="#">Group Mode</a></li>
 	  <li><a href="StatusManagementApplication_timeline.jsp">Timeline</a></li>
 	</ul>
 	

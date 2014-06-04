@@ -17,7 +17,7 @@ import edu.uci.ics.luci.groupstatusserver.userdatabase.UserDAO;
 @SuppressWarnings("serial")
 public class ServletCreateUser extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		System.out.println("Creating a new user ");
+		System.out.println("Creating a new user");
 		User user = (User) req.getAttribute("user");
 		if (user == null) {
 			UserService userService = UserServiceFactory.getUserService();
@@ -27,18 +27,17 @@ public class ServletCreateUser extends HttpServlet {
 		String userPW = checkNull(req.getParameter("userPW"));
 		String group = checkNull(req.getParameter("group"));
 		String type = checkNull(req.getParameter("type"));
-		String startingDateForExp = checkNull(req.getParameter("startingDateForExp"));
-		String timeIntervalForExp = checkNull(req.getParameter("timeIntervalForExp"));
+		String startingDateOfExp = checkNull(req.getParameter("startingDateOfExp"));
+		String timeIntervalOfExp = checkNull(req.getParameter("timeIntervalOfExp"));
 		String other = checkNull(req.getParameter("other"));
-		String admin = user.getUserId();
 
-		UserDAO.INSTANCE.add(userID, userPW, group, type, startingDateForExp, timeIntervalForExp, other, admin);
+		UserDAO.INSTANCE.add(userID, userPW, group, type, startingDateOfExp, timeIntervalOfExp, other);
 
 		resp.sendRedirect("/ParticipantManagementApplication.jsp");
 	}
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		System.out.println("doGet @ ServletCreateTodo");
+		System.out.println("doGet @ CreateAUser");
 
 		doPost(req, resp);
 

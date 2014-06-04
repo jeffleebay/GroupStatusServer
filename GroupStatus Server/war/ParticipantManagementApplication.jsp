@@ -218,8 +218,8 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 						<td><%=userobject.getUserPW()%></td>
 						<td><%=userobject.getmGroup()%></td>
 						<td><%=userobject.getType()%></td>
-						<td><%=userobject.getStartingDateForExp()%></td>
-						<td><%=userobject.geTtimeIntervalForExp()%></td>
+						<td><%=userobject.getStartingDateOfExpForDisplay()%></td>
+						<td><%=userobject.getTimeIntervalOfExp()%></td>
 						<td><%=userobject.getOther()%></td>
 						<td><a class="done" href="/done?id=<%=userobject.getId()%>">Remove</a>
 						</td>

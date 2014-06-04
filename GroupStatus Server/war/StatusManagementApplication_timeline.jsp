@@ -1,5 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page import="java.lang.System"%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.util.Calendar"%>
+<%@ page import="java.util.GregorianCalendar"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="com.google.appengine.api.users.User"%>
 <%@ page import="com.google.appengine.api.users.UserService"%>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
@@ -7,6 +11,10 @@
 	import="edu.uci.ics.luci.groupstatusserver.statusdatabase.StatusDAO"%>
 <%@ page
 	import="edu.uci.ics.luci.groupstatusserver.statusdatabase.StatusObject"%>
+<%@ page
+	import="edu.uci.ics.luci.groupstatusserver.userdatabase.UserDAO"%>
+<%@ page
+	import="edu.uci.ics.luci.groupstatusserver.userdatabase.UserObject"%>
 
 <!DOCTYPE html>
 
@@ -131,7 +139,8 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 <body>
 
 	<%
-		StatusDAO dao = StatusDAO.INSTANCE;
+		StatusDAO statusDAO = StatusDAO.INSTANCE;
+		UserDAO userDAO = UserDAO.INSTANCE;
 
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
@@ -145,8 +154,8 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 			if (userService.isUserAdmin()) {
 				url = userService.createLogoutURL(request.getRequestURI());
 				urlLinktext = "Logout";
-				groupList = dao.getDistinctGroupList(user.getUserId());
-				statusList = dao.getSortedStatusList(user.getUserId());
+				groupList = statusDAO.getDistinctGroupList(user.getUserId());
+				statusList = statusDAO.getSortedStatusList(user.getUserId());
 			} else {
 				String redirectURL = "http://www.yahoo.com";
 				response.sendRedirect(redirectURL);
@@ -196,49 +205,97 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 
 	<div class="container-fluid">
 	<h1 class="page-header">Status Management Console</h1>
-	<ul class="nav nav-tabs">
+	<ul class="nav nav-tabs nav-justified">
 	  <li><a href="StatusManagementApplication_overview.jsp">Overview</a></li>
 	  <li><a href="StatusManagementApplication_groupmode.jsp">Group Mode</a></li>
-	  <li class="active"><a href="StatusManagementApplication_timeline.jsp">Time Mode</a></li>
+	  <li class="active"><a href="#">Time Mode</a></li>
 	</ul>
 	
 	<%
+	
+		List <UserObject> userListOfTheGroup = new ArrayList<UserObject>(); 
+	
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd");
+		Calendar startingDateOfExp = Calendar.getInstance();
+		Calendar endingDateOfExp = Calendar.getInstance();
+		int timeIntervalOfExp = 0;
+		
+		int experimentTimepPool[]={9,12,15,18,21};
+		int time_lowerBound = 0;
+		int time_upperBound = 0;
+		
+	
 		for (String groupName : groupList) {
 			List<StatusObject> statusListOfTheGroup = new ArrayList<StatusObject>();
-			statusListOfTheGroup = dao.getStatusListOfTheGroup(groupName, user.getUserId());
+			
 	%>
-	<h3 class="page-header"><%=groupName%></h3>
-	
-	<div class="table-responsive">
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>Group</th>
-						<th>User ID</th>
-						<th>Time stamp</th>
-						<th>Status</th>
-						<th>Group Status</th>
-					</tr>
-				</thead>
-				<tbody>
+			<h3 class="page-header"><%=groupName%></h3>
 		<%
-			for (StatusObject statusobject : statusListOfTheGroup) {
-		%>
-					<tr>
-						<td><%=statusobject.getmGroup()%></td>
-						<td><%=statusobject.getUserID()%></td>
-						<td><%=statusobject.getTimestamp()%></td>
-						<td><%=statusobject.getStatus()%></td>
-						<td><%=statusobject.getmGroupStatus()%></td>
-					</tr>
-						<%
-		}
-	%>	
-				</tbody>
-			</table>
-		</div>
-	
+		
+			userListOfTheGroup = userDAO.getUserListOfTheGroup(groupName);
+			if(userListOfTheGroup.size()>0){
+				startingDateOfExp.setTime(userListOfTheGroup.get(0).getStartingDateOfExpAsDateObject());
+				endingDateOfExp.setTime(userListOfTheGroup.get(0).getStartingDateOfExpAsDateObject());
+				timeIntervalOfExp = Integer.parseInt(userListOfTheGroup.get(0).getTimeIntervalOfExp());
+				//(timeIntervalOfExp - 1) because it's time "interval"
+				endingDateOfExp.set(Calendar.DAY_OF_YEAR, startingDateOfExp.get(Calendar.DAY_OF_YEAR) + timeIntervalOfExp - 1);
+			}
+			
+			for(int j=0;j<timeIntervalOfExp;j++){
+				
+				Calendar currentDateForRetrivingStatuses = startingDateOfExp;
+				currentDateForRetrivingStatuses.set(Calendar.DAY_OF_YEAR, startingDateOfExp.get(Calendar.DAY_OF_YEAR) + j);
+				
+				
+				for(int i=0;i<experimentTimepPool.length;i++){
+					
+					time_lowerBound = experimentTimepPool[i]-1;	
+					time_upperBound = experimentTimepPool[i]+2;	
+					String days[]={"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+					
+					String experimentTime = time_lowerBound + ":00 - " + time_upperBound + ":00";
+					String experimentDate = sdf.format(currentDateForRetrivingStatuses.getTime()) + " "
+											+ days[currentDateForRetrivingStatuses.get(Calendar.DAY_OF_WEEK)];
+					
+					statusListOfTheGroup = statusDAO.getStatusListOfTheGroupInATimeInterval(currentDateForRetrivingStatuses, time_lowerBound, time_upperBound, groupName, user.getUserId());
+			%>
+			<div style="float:right; text-align:right"><h4 class="page-header"><%=experimentTime%></h4></div>
+
+			<div style="float:left; text-align:left"><h4 class="page-header"><%=experimentDate%></h4></div>
+				
+				
+				<div class="table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Group</th>
+									<th>User ID</th>
+									<th>Time stamp</th>
+									<th>Status</th>
+									<th>Group Status</th>
+								</tr>
+							</thead>
+							<tbody>
+					<%
+						for (StatusObject statusobject : statusListOfTheGroup) {
+					%>
+								<tr>
+									<td><%=statusobject.getmGroup()%></td>
+									<td><%=statusobject.getUserID()%></td>
+									<td><%=statusobject.getTimestamp()%></td>
+									<td><%=statusobject.getStatus()%></td>
+									<td><%=statusobject.getmGroupStatus()%></td>
+								</tr>
+		<%
+			}
+		%>	
+					</tbody>
+				</table>
+			</div>
+		
 	<%
+				}
+			}
 		}
 	%>	
 

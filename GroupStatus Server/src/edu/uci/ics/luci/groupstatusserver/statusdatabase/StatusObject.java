@@ -1,5 +1,8 @@
 package edu.uci.ics.luci.groupstatusserver.statusdatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,15 +17,15 @@ public class StatusObject {
 	private Long id;
 	private String userID;
 	private String mGroup;
-	private String timestamp;
+	private Date timestamp;
 	private String status;
 	private String mGroupStatus;
 	private Text wifiList;
 	private String noiseLevel;
 	private String location;
 	private String address;
-
-	public StatusObject(String userID, String mGroup, String timestamp, String status, 
+	
+	public StatusObject(String userID, String mGroup, Date timestamp, String status, 
 			String mGroupStatus, Text wifiList, String noiseLevel, String location, String address) {
 		this.userID = userID;
 		this.mGroup = mGroup;
@@ -55,11 +58,20 @@ public class StatusObject {
 		this.mGroup = mGroup;
 	}
 
+//	public DateTime getTimestamp() {
+//		return timestamp;
+//	}
+//	
 	public String getTimestamp() {
-		return timestamp;
-	}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		String s = null;
+		if(timestamp != null) s = sdf.format(timestamp);
+		
+		return s;
+	}	
 	
-	public void setTimestamp(String timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
 	
