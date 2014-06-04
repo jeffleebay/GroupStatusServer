@@ -144,7 +144,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 			if (userService.isUserAdmin()) {
 				url = userService.createLogoutURL(request.getRequestURI());
 				urlLinktext = "Logout";
-				userList = dao.getUserList(user.getUserId());
+				userList = dao.getUserList();
 			} else {
 				String redirectURL = "http://www.yahoo.com";
 				response.sendRedirect(redirectURL);
@@ -249,7 +249,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 			<div class="form-group">
 				<label for="userID" class="col-sm-2 control-label">User ID</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" id="userID"
+					<input type="text" class="form-control" name="userID" id="userID"
 						placeholder="User ID (4 digits)">
 				</div>
 			</div>
@@ -257,7 +257,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 			<div class="form-group">
 				<label for="userPW" class="col-sm-2 control-label">User PW</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" id="userPW"
+					<input type="text" class="form-control" name="userPW" id="userPW"
 						placeholder="User PW (4 digits)">
 				</div>
 			</div>
@@ -265,7 +265,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 			<div class="form-group">
 				<label for="group" class="col-sm-2 control-label">Group</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" id="group"
+					<input type="text" class="form-control" name="group" id="group"
 						placeholder="Group">
 				</div>
 			</div>
@@ -273,7 +273,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 			<div class="form-group">
 				<label for="type" class="col-sm-2 control-label">Type</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" id="type"
+					<input type="text" class="form-control" name="type" id="type"
 						placeholder="Type (debugging, testing, experiment)">
 				</div>
 			</div>
@@ -282,7 +282,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 				<label for="startingDateForExp" class="col-sm-2 control-label">Starting
 					Date</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" id="startingDateForExp"
+					<input type="text" class="form-control" name="startingDateForExp" id="startingDateForExp"
 						placeholder="Starting Date (MMDD) [Experiment only]">
 				</div>
 			</div>
@@ -291,7 +291,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 				<label for="timeIntervalForExp" class="col-sm-2 control-label">Time
 					Interval</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" id="timeIntervalForExp"
+					<input type="text" class="form-control" name="timeIntervalForExp" id="timeIntervalForExp"
 						placeholder="Time Interval (Days) [Experiment only]">
 				</div>
 			</div>
@@ -299,7 +299,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 			<div class="form-group">
 				<label for="other" class="col-sm-2 control-label">Other</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" id="other"
+					<input type="text" class="form-control" name="other" id="other"
 						placeholder="Other">
 				</div>
 			</div>
@@ -307,10 +307,9 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-default">Create a new
-						participant</button>
 				</div>
 			</div>
+					<button type="submit" class="btn btn-default" value="Create">Create a new participant</button>
 
 		</form>
 
@@ -338,7 +337,6 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 			<p>© Jeff S.C. Lee 2014</p>
 		</footer>
 
-
 		<%
 			} else {
 		%>
@@ -360,3 +358,5 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 
 </body>
 </html>
+
+
