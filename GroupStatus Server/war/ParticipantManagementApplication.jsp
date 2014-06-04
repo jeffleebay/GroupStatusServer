@@ -273,8 +273,15 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 			<div class="form-group">
 				<label for="type" class="col-sm-2 control-label">Type</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" name="type" id="type"
-						placeholder="Type (debugging, testing, experiment)">
+					<label class="radio-inline">
+				     <input type="radio" name="type" id="inlineCheckbox1" value="debugging"> Debugging
+				    </label>
+				    <label class="radio-inline">
+				     <input type="radio" name="type" id="inlineCheckbox2" value="testing"> Testing
+				    </label>
+				    <label class="radio-inline">
+				     <input type="radio" name="type" id="inlineCheckbox3" value="experiment"> Experiment
+				    </label>
 				</div>
 			</div>
 			
