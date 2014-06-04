@@ -44,7 +44,6 @@ public enum StatusDAO {
 		 
 		@SuppressWarnings("unchecked")
 		List<StatusObject> statuses = q.getResultList();
-		
 		return statuses;
 	}
 	

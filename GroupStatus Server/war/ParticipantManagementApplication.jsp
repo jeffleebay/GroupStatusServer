@@ -266,7 +266,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 				<label for="group" class="col-sm-2 control-label">Group</label>
 				<div class="col-sm-8">
 					<input type="text" class="form-control" name="group" id="group"
-						placeholder="Group">
+						placeholder="Group Name">
 				</div>
 			</div>
 
@@ -290,7 +290,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 					Date</label>
 				<div class="col-sm-8">
 					<input type="text" class="form-control" name="startingDateOfExp" id="startingDateOfExp"
-						placeholder="Starting Date (MMDD) [Experiment only]">
+						placeholder="Starting Date (MMDD) [Required for all types]">
 				</div>
 			</div>
 
@@ -299,7 +299,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 					Interval</label>
 				<div class="col-sm-8">
 					<input type="text" class="form-control" name="timeIntervalOfExp" id="timeIntervalOfExp"
-						placeholder="Time Interval (Days) [Experiment only]">
+						placeholder="Time Interval (Days) [Required for all types]">
 				</div>
 			</div>
 

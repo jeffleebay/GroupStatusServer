@@ -243,7 +243,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 
 		<footer align="center">
 			<p>© Jeff S.C. Lee 2014</p>
-		</footer>
+		</footer> 
 
 
 		<%
