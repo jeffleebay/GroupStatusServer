@@ -255,9 +255,10 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 					
 					String experimentTime = time_lowerBound + ":00 - " + time_upperBound + ":00";
 					String experimentDate = sdf.format(currentDateForRetrivingStatuses.getTime()) + " "
-											+ days[currentDateForRetrivingStatuses.get(Calendar.DAY_OF_WEEK)];
+											+ days[currentDateForRetrivingStatuses.get(Calendar.DAY_OF_WEEK)-1];
 					
 					statusListOfTheGroup = statusDAO.getStatusListOfTheGroupInATimeInterval(currentDateForRetrivingStatuses, time_lowerBound, time_upperBound, groupName, user.getUserId());
+					if(statusListOfTheGroup.size()>0){
 			%>
 			<div style="float:right; text-align:right"><h4 class="page-header"><%=experimentTime%></h4></div>
 
@@ -286,14 +287,15 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 									<td><%=statusobject.getStatus()%></td>
 									<td><%=statusobject.getmGroupStatus()%></td>
 								</tr>
-		<%
-			}
-		%>	
+					<%
+						}
+					%>	
 					</tbody>
 				</table>
 			</div>
 		
 	<%
+					}
 				}
 			}
 		}

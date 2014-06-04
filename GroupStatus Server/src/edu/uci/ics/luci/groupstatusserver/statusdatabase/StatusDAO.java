@@ -40,7 +40,7 @@ public enum StatusDAO {
 	public List<StatusObject> getSortedStatusList(String adminID) {
 		
 		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("SELECT t FROM StatusObject t ORDER BY t.mGroup,  t.userID ASC");
+		Query q = em.createQuery("SELECT t FROM StatusObject t ORDER BY t.timestamp DESC"); //ORDER BY t.mGroup,  t.userID  ASC
 		 
 		@SuppressWarnings("unchecked")
 		List<StatusObject> statuses = q.getResultList();
@@ -61,7 +61,7 @@ public enum StatusDAO {
 	public List<StatusObject> getStatusListOfTheGroup(String groupName, String adminID) {
 		
 		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("SELECT t FROM StatusObject t WHERE t.mGroup = :groupName ORDER BY t.timestamp, t.userID ASC");
+		Query q = em.createQuery("SELECT t FROM StatusObject t WHERE t.mGroup = :groupName ORDER BY t.timestamp DESC");
 		q.setParameter("groupName", groupName);
 		
 		@SuppressWarnings("unchecked")
@@ -79,8 +79,7 @@ public enum StatusDAO {
 		upperBoundOfTimeInterval.set(Calendar.HOUR_OF_DAY, time_upperBound);
 		
 		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("SELECT t FROM StatusObject t "
-							   + "WHERE t.mGroup = :groupName AND t.timestamp BETWEEN :lowerBound AND :upperBound");
+		Query q = em.createQuery("SELECT t FROM StatusObject t WHERE t.mGroup = :groupName AND t.timestamp BETWEEN :lowerBound AND :upperBound ORDER BY t.timestamp ASC");
 		q.setParameter("groupName", groupName);
 		q.setParameter("lowerBound", lowerBoundOfTimeInterval.getTime());
 		q.setParameter("upperBound", upperBoundOfTimeInterval.getTime());
