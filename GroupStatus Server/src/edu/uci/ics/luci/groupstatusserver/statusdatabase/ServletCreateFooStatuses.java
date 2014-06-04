@@ -66,8 +66,12 @@ public class ServletCreateFooStatuses extends HttpServlet {
 				}
 			}
 		}
-		
-		
+		group="debugging group";
+		userID="1234";
+		timestamp=timestampPool[0];
+		status = statusPool[rand.nextInt(statusPool.length)];
+		groupStatus = groupStatusPool[rand.nextInt(groupStatusPool.length)];
+		StatusDAO.INSTANCE.add(userID, group, timestamp, status, groupStatus, wifiList, noiseLevel, location, address);
 
 		resp.sendRedirect("/ParticipantManagementApplication.jsp");
 	}
