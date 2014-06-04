@@ -12,7 +12,7 @@ public enum UserDAO {
 
 	public void add(String userID, String userPW, String group, String type, String startingDateOfExp, String timeIntervalOfExp, String other) {
 		synchronized (this) {
-			
+			System.out.println(startingDateOfExp);
 			Calendar startingDateTime = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR),
 					  Integer.parseInt(startingDateOfExp.substring(0,2))-1, Integer.parseInt(startingDateOfExp.substring(2)), 
 					  00, 00, 00);

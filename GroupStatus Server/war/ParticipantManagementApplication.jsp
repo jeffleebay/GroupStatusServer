@@ -277,21 +277,21 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 						placeholder="Type (debugging, testing, experiment)">
 				</div>
 			</div>
-
+			
 			<div class="form-group">
-				<label for="startingDateForExp" class="col-sm-2 control-label">Starting
+				<label for="startingDateOfExp" class="col-sm-2 control-label">Starting
 					Date</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" name="startingDateForExp" id="startingDateForExp"
+					<input type="text" class="form-control" name="startingDateOfExp" id="startingDateOfExp"
 						placeholder="Starting Date (MMDD) [Experiment only]">
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label for="timeIntervalForExp" class="col-sm-2 control-label">Time
+				<label for="timeIntervalOfExp" class="col-sm-2 control-label">Time
 					Interval</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" name="timeIntervalForExp" id="timeIntervalForExp"
+					<input type="text" class="form-control" name="timeIntervalOfExp" id="timeIntervalOfExp"
 						placeholder="Time Interval (Days) [Experiment only]">
 				</div>
 			</div>
