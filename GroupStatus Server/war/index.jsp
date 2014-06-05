@@ -159,6 +159,10 @@
 							Management</a></li>
 					<li><a href="StatusManagementApplication_overview.jsp">Status
 							Management</a></li>
+					<%
+					if (user != null) {
+						if (userService.isUserAdmin()) {
+					%>
 					<li class="dropdown">
 				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Stress Testing<b class="caret"></b></a>
 						<ul class="dropdown-menu">
@@ -167,6 +171,11 @@
 							<li><a href="/fooStatus">Create foo statuses</a></li>
 						</ul>
 					</li>
+					<%
+						}
+					}
+					%>
+					
 				</ul>
 				<form class="nav navbar-form navbar-right" role="form">
 					<a href="<%=url%>" class="btn btn-success" role="button"><%=urlLinktext%></a>
