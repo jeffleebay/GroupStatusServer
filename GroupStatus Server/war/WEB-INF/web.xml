@@ -20,7 +20,16 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CreateFooStatus</servlet-name>
-		<url-pattern>/fooStatus</url-pattern>
+		<url-pattern>/CreateFooStatus</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>DeleteFooStatus</servlet-name>
+		<servlet-class>edu.uci.ics.luci.groupstatusserver.statusdatabase.ServletDeleteFooStatuses</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeleteFooStatus</servlet-name>
+		<url-pattern>/RemoveFooStatus</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -29,8 +38,19 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CreateFooUser</servlet-name>
-		<url-pattern>/fooUser</url-pattern>
+		<url-pattern>/CreateFooUser</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>DeleteFooUser</servlet-name>
+		<servlet-class>edu.uci.ics.luci.groupstatusserver.userdatabase.ServletDeleteFooUsers</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeleteFooUser</servlet-name>
+		<url-pattern>/RemoveFooUser</url-pattern>
+	</servlet-mapping>
+	
+
 	
 	<servlet>
 		<servlet-name>CreateNewUser</servlet-name>

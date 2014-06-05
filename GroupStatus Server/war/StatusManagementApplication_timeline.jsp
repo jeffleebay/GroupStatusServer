@@ -154,16 +154,14 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 			if (userService.isUserAdmin()) {
 				url = userService.createLogoutURL(request.getRequestURI());
 				urlLinktext = "Logout";
-				groupList = statusDAO.getDistinctGroupList(user.getUserId());
-				statusList = statusDAO.getSortedStatusList(user.getUserId());
+				groupList = statusDAO.getDistinctGroupList();
+				statusList = statusDAO.getSortedStatusList();
 			} else {
 				String redirectURL = "http://www.yahoo.com";
 				response.sendRedirect(redirectURL);
 			}
 		}
 	%>
-
-	<!-- Nav bar -->
 
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
@@ -189,9 +187,11 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 					<li class="dropdown">
 				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Stress Testing<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="/fooUser">Create foo users</a></li>
+							<li><a href="/CreateFooUser">Create foo users</a></li>
+							<li><a href="/RemoveFooUser">Delete foo users</a></li>
 							<li class="divider"></li>
-							<li><a href="/fooStatus">Create foo statuses</a></li>
+							<li><a href="/CreateFooStatus">Create foo statuses</a></li>
+							<li><a href="/RemoveFooStatus">Delete foo statuses</a></li>
 						</ul>
 					</li>
 					<%
@@ -274,7 +274,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 					String experimentDate = sdf.format(currentDateForRetrivingStatuses.getTime()) + " "
 											+ days[currentDateForRetrivingStatuses.get(Calendar.DAY_OF_WEEK)-1];
 					
-					statusListOfTheGroup = statusDAO.getStatusListOfTheGroupInATimeInterval(currentDateForRetrivingStatuses, time_lowerBound, time_upperBound, groupName, user.getUserId());
+					statusListOfTheGroup = statusDAO.getStatusListOfTheGroupInATimeInterval(currentDateForRetrivingStatuses, time_lowerBound, time_upperBound, groupName);
 					
 					if(statusListOfTheGroup.size()>0){
 						%>

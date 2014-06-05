@@ -3,7 +3,6 @@ package edu.uci.ics.luci.groupstatusserver.statusdatabase;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -37,7 +36,7 @@ public enum StatusDAO {
 		}
 	}
 	
-	public List<StatusObject> getSortedStatusList(String adminID) {
+	public List<StatusObject> getSortedStatusList() {
 		
 		EntityManager em = EMFService.get().createEntityManager();
 		Query q = em.createQuery("SELECT t FROM StatusObject t ORDER BY t.timestamp DESC"); //ORDER BY t.mGroup,  t.userID  ASC
@@ -47,7 +46,7 @@ public enum StatusDAO {
 		return statuses;
 	}
 	
-	public List<String> getDistinctGroupList(String adminID) {
+	public List<String> getDistinctGroupList() {
 		
 		EntityManager em = EMFService.get().createEntityManager();
 		Query q = em.createQuery("SELECT DISTINCT t.mGroup FROM StatusObject t ORDER BY t.mGroup ASC");
@@ -58,7 +57,7 @@ public enum StatusDAO {
 		return groupNames;
 	}
 	
-	public List<StatusObject> getStatusListOfTheGroup(String groupName, String adminID) {
+	public List<StatusObject> getStatusListOfTheGroup(String groupName) {
 		
 		EntityManager em = EMFService.get().createEntityManager();
 		Query q = em.createQuery("SELECT t FROM StatusObject t WHERE t.mGroup = :groupName ORDER BY t.timestamp DESC");
@@ -70,7 +69,7 @@ public enum StatusDAO {
 		return statuses;
 	}
 	
-	public List<StatusObject> getStatusListOfTheGroupInATimeInterval(Calendar date, int time_lowerBound, int time_upperBound, String groupName, String adminID) {
+	public List<StatusObject> getStatusListOfTheGroupInATimeInterval(Calendar date, int time_lowerBound, int time_upperBound, String groupName) {
 		
 		//Be careful that month of year starts at 0...
 		Calendar lowerBoundOfTimeInterval = (Calendar) date.clone();
@@ -87,6 +86,16 @@ public enum StatusDAO {
 		@SuppressWarnings("unchecked")
 		List<StatusObject> statuses = q.getResultList();
 		return statuses;
+	}
+	
+	public void remove(long id) {
+		EntityManager em = EMFService.get().createEntityManager();
+		try {
+			StatusObject status = em.find(StatusObject.class, id);
+			em.remove(status);
+		} finally {
+			em.close();
+		}
 	}
 	
 }

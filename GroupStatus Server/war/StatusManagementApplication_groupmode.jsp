@@ -145,8 +145,8 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 			if (userService.isUserAdmin()) {
 				url = userService.createLogoutURL(request.getRequestURI());
 				urlLinktext = "Logout";
-				groupList = dao.getDistinctGroupList(user.getUserId());
-				statusList = dao.getSortedStatusList(user.getUserId());
+				groupList = dao.getDistinctGroupList();
+				statusList = dao.getSortedStatusList();
 			} else {
 				String redirectURL = "http://www.yahoo.com";
 				response.sendRedirect(redirectURL);
@@ -180,9 +180,11 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 					<li class="dropdown">
 				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Stress Testing<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="/fooUser">Create foo users</a></li>
+							<li><a href="/CreateFooUser">Create foo users</a></li>
+							<li><a href="/RemoveFooUser">Delete foo users</a></li>
 							<li class="divider"></li>
-							<li><a href="/fooStatus">Create foo statuses</a></li>
+							<li><a href="/CreateFooStatus">Create foo statuses</a></li>
+							<li><a href="/RemoveFooStatus">Delete foo statuses</a></li>
 						</ul>
 					</li>
 					<%
@@ -222,7 +224,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 	<%
 		for (String groupName : groupList) {
 			List<StatusObject> statusListOfTheGroup = new ArrayList<StatusObject>();
-			statusListOfTheGroup = dao.getStatusListOfTheGroup(groupName, user.getUserId());
+			statusListOfTheGroup = dao.getStatusListOfTheGroup(groupName);
 	%>
 	<h3 class="page-header"><%=groupName%></h3>
 	

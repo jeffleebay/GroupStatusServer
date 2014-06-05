@@ -32,7 +32,7 @@ public class ServletCreateStatus extends HttpServlet {
 		
 		StatusDAO.INSTANCE.add(userID, group, timestamp, status, groupStatus, wifiList, noiseLevel, location, address);
 
-		resp.sendRedirect("/ParticipantManagementApplication.jsp");
+		resp.sendRedirect("/StatusManagementApplication_overview.jsp");
 	}
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
