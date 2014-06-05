@@ -171,6 +171,14 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 							Management</a></li>
 					<li><a href="StatusManagementApplication_overview.jsp">Status
 							Management</a></li>
+					<li class="dropdown">
+				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Stress Testing<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="/fooUser">Create foo users</a></li>
+							<li class="divider"></li>
+							<li><a href="/fooStatus">Create foo statuses</a></li>
+						</ul>
+					</li>
 				</ul>
 				<form class="nav navbar-form navbar-right" role="form">
 					<a href="<%=url%>" class="btn btn-success" role="button"><%=urlLinktext%></a>
@@ -319,22 +327,6 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 					<button type="submit" class="btn btn-default" value="Create">Create a new participant</button>
 
 		</form>
-
-
-		<h1 class="page-header">Create foo participants</h1>
-
-		<div class="btn-group">
-			<button type="button" class="btn btn-default dropdown-toggle"
-				data-toggle="dropdown">
-				Don't click me if you don't know what you are doing <span
-					class="caret"></span>
-			</button>
-			<ul class="dropdown-menu" role="menu">
-				<li><a href="/fooUser">Create foo users</a></li>
-				<li class="divider"></li>
-				<li><a href="/fooStatus">Create foo statuses</a></li>
-			</ul>
-		</div>
 
 		<!-- Footer -->
 

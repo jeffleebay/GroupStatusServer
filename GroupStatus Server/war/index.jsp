@@ -24,8 +24,8 @@
 		rel="stylesheet">
 	
 	<!-- Custom styles for this template -->
-	<link href="http://getbootstrap.com/examples/dashboard/dashboard.css"
-		rel="stylesheet">
+	<!--<link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet"> -->
+	<link href="./css/jumbotron-narrow.css" rel="stylesheet">
 	
 	<!-- Just for debugging purposes. Don't actually copy this line! -->
 	<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -147,24 +147,33 @@
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span> 
-					<span class="icon-bar"></span> 
-					<span class="icon-bar"></span> 
-					<span class="icon-bar"></span>
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="index.jsp">Group Status</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-left">
-					<li><a href="ParticipantManagementApplication.jsp">Participant Management</a></li>
-					<li><a href="StatusManagementApplication.jsp">Status Management</a></li>
+					<li><a href="ParticipantManagementApplication.jsp">Participant
+							Management</a></li>
+					<li><a href="StatusManagementApplication_overview.jsp">Status
+							Management</a></li>
+					<li class="dropdown">
+				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Stress Testing<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="/fooUser">Create foo users</a></li>
+							<li class="divider"></li>
+							<li><a href="/fooStatus">Create foo statuses</a></li>
+						</ul>
+					</li>
 				</ul>
 				<form class="nav navbar-form navbar-right" role="form">
-            		<a href="<%=url%>" class="btn btn-success" role="button"><%=urlLinktext%></a>
-          		</form>
-          		<%
-          			if (user != null) { 
-          		%>
+					<a href="<%=url%>" class="btn btn-success" role="button"><%=urlLinktext%></a>
+				</form>
+				<%
+					if (user != null) {
+				%>
 				<p class="navbar-text navbar-right"><%=(user == null ? "" : user.getNickname())%></p>
 				<%
 					}
@@ -173,6 +182,8 @@
 		</div>
 	</div>
 
+	<br>
+	<br>
 	<br>
 	<div class="container">
 		<div class="jumbotron">
