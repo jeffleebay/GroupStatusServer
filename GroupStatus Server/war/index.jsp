@@ -166,9 +166,11 @@
 					<li class="dropdown">
 				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Stress Testing<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="/fooUser">Create foo users</a></li>
+							<li><a href="/CreateFooUser">Create foo users</a></li>
+							<li><a href="/RemoveFooUser">Delete foo users</a></li>
 							<li class="divider"></li>
-							<li><a href="/fooStatus">Create foo statuses</a></li>
+							<li><a href="/CreateFooStatus">Create foo statuses</a></li>
+							<li><a href="/RemoveFooStatus">Delete foo statuses</a></li>
 						</ul>
 					</li>
 					<%
