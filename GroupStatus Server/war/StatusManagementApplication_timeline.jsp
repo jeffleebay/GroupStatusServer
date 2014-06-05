@@ -275,42 +275,42 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 											+ days[currentDateForRetrivingStatuses.get(Calendar.DAY_OF_WEEK)-1];
 					
 					statusListOfTheGroup = statusDAO.getStatusListOfTheGroupInATimeInterval(currentDateForRetrivingStatuses, time_lowerBound, time_upperBound, groupName, user.getUserId());
+					
 					if(statusListOfTheGroup.size()>0){
-			%>
-			<div style="float:right; text-align:right"><h4 class="page-header"><%=experimentTime%></h4></div>
-
-			<div style="float:left; text-align:left"><h4 class="page-header"><%=experimentDate%></h4></div>
-				
-				
-				<div class="table-responsive">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th>Group</th>
-									<th>User ID</th>
-									<th>Time stamp</th>
-									<th>Status</th>
-									<th>Group Status</th>
-								</tr>
-							</thead>
-							<tbody>
-					<%
-						for (StatusObject statusobject : statusListOfTheGroup) {
-					%>
-								<tr>
-									<td><%=statusobject.getmGroup()%></td>
-									<td><%=statusobject.getUserID()%></td>
-									<td><%=statusobject.getTimestamp()%></td>
-									<td><%=statusobject.getStatus()%></td>
-									<td><%=statusobject.getmGroupStatus()%></td>
-								</tr>
-					<%
-						}
-					%>	
-					</tbody>
-				</table>
-			</div>
-		
+						%>
+						<div style="float:right; text-align:right"><h4 class="page-header"><%=experimentTime%></h4></div>
+			
+						<div style="float:left; text-align:left"><h4 class="page-header"><%=experimentDate%></h4></div>
+						
+						
+						<div class="table-responsive">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>Group</th>
+										<th>User ID</th>
+										<th>Time stamp</th>
+										<th>Status</th>
+										<th>Group Status</th>
+									</tr>
+								</thead>
+								<tbody>
+							<%
+								for (StatusObject statusobject : statusListOfTheGroup) {
+							%>
+										<tr>
+											<td><%=statusobject.getmGroup()%></td>
+											<td><%=statusobject.getUserID()%></td>
+											<td><%=statusobject.getTimestamp()%></td>
+											<td><%=statusobject.getStatus()%></td>
+											<td><%=statusobject.getmGroupStatus()%></td>
+										</tr>
+							<%
+								}
+							%>	
+								</tbody>
+							</table>
+						</div>
 	<%
 					}
 				}
