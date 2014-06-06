@@ -44,8 +44,22 @@
 	      <![endif]-->
 <style type="text/css"></style>
 <style id="holderjs-style" type="text/css"></style>
-<script type="text/javascript"
-	src="chrome-extension://bfbmjmiodbnnpllbbbfblcplfjjepjdn/js/injected.js"></script>
+<script type="text/javascript" src="chrome-extension://bfbmjmiodbnnpllbbbfblcplfjjepjdn/js/injected.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script>
+    $(function() {
+    	$(document).ready(function() {   
+             $('#navbar').load('navbar.jsp');
+             return false;
+         });
+         
+    	$(document).ready(function() {   
+            $('#footer').load('footer.html');
+            return false;
+        });
+
+	});
+    </script>
 <style>
 [touch-action="none"] {
 	-ms-touch-action: none;
@@ -154,56 +168,7 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 
 	<!-- Nav bar -->
 
-	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="index.jsp">Group Status</a>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-left">
-					<li><a href="ParticipantManagementApplication.jsp">Participant
-							Management</a></li>
-					<li><a href="StatusManagementApplication_overview.jsp">Status
-							Management</a></li>
-					<%
-					if (user != null) {
-						if (userService.isUserAdmin()) {
-					%>
-					<li class="dropdown">
-				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Stress Testing<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="/CreateFooUser">Create foo users</a></li>
-							<li><a href="/RemoveFooUser">Delete foo users</a></li>
-							<li class="divider"></li>
-							<li><a href="/CreateFooStatus">Create foo statuses</a></li>
-							<li><a href="/RemoveFooStatus">Delete foo statuses</a></li>
-						</ul>
-					</li>
-					<%
-						}
-					}
-					%>
-					
-				</ul>
-				<form class="nav navbar-form navbar-right" role="form">
-					<a href="<%=url%>" class="btn btn-success" role="button"><%=urlLinktext%></a>
-				</form>
-				<%
-					if (user != null) {
-				%>
-				<p class="navbar-text navbar-right"><%=(user == null ? "" : user.getNickname())%></p>
-				<%
-					}
-				%>
-			</div>
-		</div>
-	</div>
+	<div id= "navbar"></div>
 
 	<%
 		if (user != null) {
@@ -333,19 +298,17 @@ em.clearly_highlight_element a.clearly_highlight_delete_element:hover {
 
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-default" value="Create">Create a new participant</button>
 				</div>
 			</div>
-					<button type="submit" class="btn btn-default" value="Create">Create a new participant</button>
 
 		</form>
 
 		<!-- Footer -->
 
-		<br> <br> <br>
+		<br>
 
-		<footer align="center">
-			<p>© Jeff S.C. Lee 2014</p>
-		</footer>
+		<div id= "footer"></div>
 
 		<%
 			} else {
